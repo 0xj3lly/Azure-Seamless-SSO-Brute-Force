@@ -67,16 +67,12 @@ foreach ($pass in $wordlist)
           grant_type="urn:ietf:params:oauth:grant-type:saml1_1-bearer"
           assertion=$base64
           }
-
-      try {
-
-          
+      try {     
         $req = Invoke-RestMethod -UseBasicParsing -Uri $uri3 -Method Post -Headers $headers -ContentType "application/x-www-form-urlencoded" -Body $body
         write-host "statuscode: $req.Exception.Response.StatusCode.value__"
         $headers = @{
             "Authorization" = ($req.token_type) +" "+ ($req.access_token)
-            }
-            
+            }          
             $me = Invoke-RestMethod -Uri ($body.resource + "/v1.0/me") -Method Get -Headers $headers; $me
       }
       catch {
